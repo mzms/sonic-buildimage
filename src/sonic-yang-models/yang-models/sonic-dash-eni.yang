@@ -1,0 +1,77 @@
+module sonic-dash-eni {
+	namespace "http://github.com/Azure/sonic-dash-eni";
+    yang-version 1.1;
+
+    import ietf-yang-types {
+		prefix yang;
+	}
+
+	import ietf-inet-types {
+		prefix inet;
+	}
+
+	import sonic-common {
+		prefix scommon;
+	}
+
+    import sonic-types {
+        prefix stypes;
+    }
+
+    organization
+		"SONiC";
+
+	contact
+		"SONiC";
+
+	description
+		"SONiC DASH YANG ENI";
+
+    revision 2022-03-01 {
+		description
+			"Initial revision - DASH - ENI."; // Initial revision.
+	}
+
+    container dash-eni {
+        description "ENI (Elastic Network Interface) part of config_db.json";
+
+        container ENI {
+
+            list ENI_LIST {
+                key "mac";
+
+                leaf mac {
+                    mandatory true;
+                    type inet:mac_address;
+                }
+
+                leaf eni_id {
+                    mandatory true;
+                    type string; // guid
+                }
+
+                leaf ha_group_id {
+                    mandatory true;
+                    type leafref {
+                        path "../../../HA_GROUP_TABLE/HA_GROUP_TABLE_LIST/hagroupname"; // not sure how to correctly do those references
+                    }
+                }
+
+                leaf qos_id {
+                    mandatory true;
+                    type leafref {
+                        path "../../../QOS_TABLE/QOS_TABLE_LIST/qosid"; // not sure how to correctly do those references
+                    }
+                }
+
+                list vnets {
+                    mandatory true;
+                    type sonic-dash-vnet:vnet;
+                    type leafref {
+                        path "../../../VNET_TABLE/VNET_TABLE_LIST/vnetid"; // not sure how to correctly do those references
+                    }
+                }
+            }
+        }
+    }
+}
