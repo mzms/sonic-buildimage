@@ -1,0 +1,68 @@
+module sonic-dash-qos {
+	namespace "http://github.com/Azure/sonic-dash-qos";
+    yang-version 1.1;
+
+    import ietf-yang-types {
+		prefix yang;
+	}
+
+	import ietf-inet-types {
+		prefix inet;
+	}
+
+	import sonic-common {
+		prefix scommon;
+	}
+
+    import sonic-types {
+        prefix stypes;
+    }
+
+    organization
+		"SONiC";
+
+	contact
+		"SONiC";
+
+	description
+		"SONiC DASH YANG QOS";
+
+    revision 2022-03-01 {
+		description
+			"Initial revision - DASH - QOS."; // Initial revision.
+	}
+
+    container dash-qos {
+
+        container QOS {
+            description "QOS (Quality of Service) part of config_db.json";
+
+            list QOS_LIST {
+                key "qos_id";
+
+                leaf qos_id {
+                    mandatory true;
+                    type string; // guid
+                }
+
+                leaf bw {
+                    description "Bandwidth limit in bytes per second.";
+
+                    type uint64;
+                }
+
+                leaf cps {
+                    description "Connections per seconds limit in number of connections per second.";
+
+                    type uint64;
+                }
+
+                leaf flows {
+                    description "Flows limit.";
+
+                    type uint32;
+                }
+            }
+        }
+    }
+}
