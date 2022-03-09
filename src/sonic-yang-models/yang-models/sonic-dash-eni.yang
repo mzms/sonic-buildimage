@@ -47,7 +47,7 @@ module sonic-dash-eni {
 
                 leaf eni_id {
                     mandatory true;
-                    type string; // guid
+                    type yang:uuid; // guid
                 }
 
                 leaf ha_group_id {

@@ -42,7 +42,7 @@ module sonic-dash-qos {
 
                 leaf qos_id {
                     mandatory true;
-                    type string; // guid
+                    type yang:uuid; // guid
                 }
 
                 leaf bw {
