@@ -1,0 +1,83 @@
+module sonic-dash-hagroup {
+	namespace "http://github.com/Azure/sonic-dash-hagroup";
+    yang-version 1.1;
+
+    import ietf-yang-types {
+		prefix yang;
+	}
+
+	import ietf-inet-types {
+		prefix inet;
+	}
+
+	import sonic-common {
+		prefix scommon;
+	}
+
+    import sonic-types {
+        prefix stypes;
+    }
+
+    organization
+		"SONiC";
+
+	contact
+		"SONiC";
+
+	description
+		"SONiC DASH YANG HA GROUP";
+
+    revision 2022-03-01 {
+		description
+			"Initial revision - DASH - HA GROUP."; // Initial revision.
+	}
+
+    container dash-hagroup {
+
+        typedef ha_status {
+            // HA group is in Active mode
+            enum active { value 1; }
+
+            // HA group is in Passive mode
+            enum passive { value 2; }
+        }
+
+        container HA_GROUP {
+            description "HA GROUP (High Availability Group) part of config_db.json";
+
+            list HA_GROUP_LIST {
+                key "ha_group_id";
+
+                leaf ha_group_id {
+                    mandatory true;
+                    type yang:uuid; // guid
+                }
+
+                leaf status {
+                    mandatory true;
+                    type ha_status;
+                }
+
+                container v4 {
+                    description "IPv4 properties of the HA group.";
+
+                    leaf vip {
+                        description "IPv4 VIP of this HA group.";
+
+                        type inet:ipv4-address-no-zone;
+                    }
+                }
+
+                container v6 {
+                    description "IPv6 properties of the HA group.";
+
+                    leaf vip {
+                        description "IPv6 VIP of this HA group.";
+
+                        type inet:ipv6-address-no-zone;
+                    }
+                }
+            }
+        }
+    }
+}
